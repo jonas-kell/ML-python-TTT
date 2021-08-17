@@ -14,7 +14,7 @@ rows = 3
 # returns 1 if 1s won game
 # returns 2 if 2s won game
 # returns 3 if draw
-# hardcoded diagonals for 3x3 //TODO fix
+# hardcoded diagonals for 3x3 //TODO fix (becomes very slow because of pathetic python for loops...)
 def check_game_state(matrix):
     # test matrix shape
     if matrix.shape != (rows, rows):
@@ -22,12 +22,20 @@ def check_game_state(matrix):
 
     # check rows
     for row in range(0, rows):
-        if matrix[row, 0] != 0 and min(matrix[row, :]) == max(matrix[row, :]):
+        if (
+            matrix[row, 0] != 0
+            and matrix[row, 0] == matrix[row, 1]
+            and matrix[row, 1] == matrix[row, 2]
+        ):
             return matrix[row, 0]
 
     # check columns
     for column in range(0, rows):
-        if matrix[0, column] != 0 and min(matrix[:, column]) == max(matrix[:, column]):
+        if (
+            matrix[0, column] != 0
+            and matrix[0, column] == matrix[1, column]
+            and matrix[1, column] == matrix[2, column]
+        ):
             return matrix[0, column]
 
     # check diagonals

@@ -5,7 +5,6 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from logic.general import check_game_state
 
 rows = 3
-
 # assignmeint of variables:
 # matrix is a rows x rows numpy array
 
