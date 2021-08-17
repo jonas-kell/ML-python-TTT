@@ -29,7 +29,7 @@ class ResizingCanvas(tk.Canvas):
 
         self.gamestate = STATE_CHOOSING
         self.beginner = STATE_COM_FIRST
-        self.matrix = np.zeros((self.rows, self.rows))
+        self.matrix = np.zeros((self.rows, self.rows), dtype=np.int8)
 
         self.bind("<Configure>", self.resize)
         self.bind("<ButtonRelease-1>", self.handle_click)
@@ -89,7 +89,7 @@ class ResizingCanvas(tk.Canvas):
         # check for game finish
         if self.gamestate == STATE_WIN_DISPLAY:
             # re-init
-            self.matrix = np.zeros((self.rows, self.rows))
+            self.matrix = np.zeros((self.rows, self.rows), dtype=np.int8)
             self.fill_from_matrix()
 
             # set next state
