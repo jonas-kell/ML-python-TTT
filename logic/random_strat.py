@@ -1,8 +1,9 @@
 import numpy as np
 import random
+import time
 
 rows = 3
-random.seed(200)
+random.seed(time.time())
 
 # assignmeint of variables:
 # matrix is a rows x rows numpy array
