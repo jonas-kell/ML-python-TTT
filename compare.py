@@ -11,7 +11,7 @@ from logic.general import transpose_board
 
 print("Compare Algorithms:")
 
-algorithm1 = random_next_move
+algorithm1 = minimax_next_move_in_c
 algorithm2 = minimax_next_move_in_c
 
 algorithm1wins = 0

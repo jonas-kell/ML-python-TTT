@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdio.h>
 
 int board[3][3];
 int minimax(int depth, int isMaximizing);
