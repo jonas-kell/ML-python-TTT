@@ -11,7 +11,7 @@ hidden = 5
 
 
 # assignmeint of variables:
-# matrix is a rows x rows numpy array
+# matrix is a sqrt(inputs) x sqrt(inputs) numpy array
 
 # a 0 indicates no placed symbol
 # a 1 indicates a placed symbol of the type of the person whose next move is requested (make sure to transpose to this state accordingly)

@@ -7,7 +7,7 @@ from logic.random_strat import get_next_move as random_next_move
 from logic.minimax import get_next_move as minimax_next_move
 from logic.minimax_c import get_next_move as minimax_next_move_in_c
 from logic.general import check_game_state
-from logic.general import transpose_board
+from logic.general import flip_board
 
 print("Compare Algorithms:")
 
@@ -29,9 +29,9 @@ for i in range(100):
         if index % 2 == 0:
             algorithm1(matrix)
         else:
-            transpose_board(matrix)
+            flip_board(matrix)
             algorithm2(matrix)
-            transpose_board(matrix)
+            flip_board(matrix)
 
         # check results
         result = check_game_state(matrix)

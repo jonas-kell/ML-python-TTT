@@ -61,7 +61,7 @@ def check_game_state(matrix):
 
 
 # changes 1s and 2s in the matrix
-def transpose_board(matrix):
+def flip_board(matrix):
 
     # test matrix shape
     if matrix.shape != (rows, rows):

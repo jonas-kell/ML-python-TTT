@@ -4,7 +4,7 @@ import numpy as np
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from logic.general import check_game_state
-from logic.general import transpose_board
+from logic.general import flip_board
 
 STATE_CHOOSING = 1
 STATE_THINKING = 2
@@ -118,11 +118,11 @@ class ResizingCanvas(tk.Canvas):
         # ai move
         if self.gamestate == STATE_THINKING:
             # transpose so that ai has right setup
-            transpose_board(self.matrix)
+            flip_board(self.matrix)
             # make ai move
             self.move_function(self.matrix)
             # transpose back into player setup
-            transpose_board(self.matrix)
+            flip_board(self.matrix)
             # render
             self.fill_from_matrix()
 
