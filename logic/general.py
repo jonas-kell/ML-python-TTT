@@ -12,46 +12,42 @@ rows = 3
 
 
 # returns 0 if undecided game
-# returns 1 if 1s won game
-# returns 2 if 2s won game
+# returns 1 if player1 won game
+# returns 2 if player2 won game
 # returns 3 if draw
 # hardcoded diagonals for 3x3 //TODO fix (becomes very slow because of pathetic python for loops...)
-def check_game_state(matrix):
+def check_game_state(matrix, player1=1, player2=2):
     # test matrix shape
     if matrix.shape != (rows, rows):
         exit()
 
     # check rows
     for row in range(0, rows):
-        if (
-            matrix[row, 0] != 0
-            and matrix[row, 0] == matrix[row, 1]
-            and matrix[row, 1] == matrix[row, 2]
-        ):
-            return matrix[row, 0]
+        if matrix[row, 0] == matrix[row, 1] and matrix[row, 1] == matrix[row, 2]:
+            if matrix[row, 0] == player1:
+                return 1
+            elif matrix[row, 0] == player2:
+                return 2
 
     # check columns
     for column in range(0, rows):
         if (
-            matrix[0, column] != 0
-            and matrix[0, column] == matrix[1, column]
+            matrix[0, column] == matrix[1, column]
             and matrix[1, column] == matrix[2, column]
         ):
-            return matrix[0, column]
+            if matrix[0, column] == player1:
+                return 1
+            elif matrix[0, column] == player2:
+                return 2
 
     # check diagonals
-    if (
-        matrix[0, 0] != 0
-        and matrix[0, 0] == matrix[1, 1]
-        and matrix[1, 1] == matrix[2, 2]
+    if (matrix[0, 0] == matrix[1, 1] and matrix[1, 1] == matrix[2, 2]) or (
+        matrix[0, 2] == matrix[1, 1] and matrix[1, 1] == matrix[2, 0]
     ):
-        return matrix[0, 0]
-    if (
-        matrix[0, 2] != 0
-        and matrix[0, 2] == matrix[1, 1]
-        and matrix[1, 1] == matrix[2, 0]
-    ):
-        return matrix[0, 2]
+        if matrix[1, 1] == player1:
+            return 1
+        elif matrix[1, 1] == player2:
+            return 2
 
     # count 0s (open spots)
     for row in range(0, rows):
@@ -62,7 +58,7 @@ def check_game_state(matrix):
 
 
 # changes 1s and 2s in the matrix
-def flip_board(matrix):
+def flip_board(matrix, swap1=1, swap2=2):
 
     # test matrix shape
     if matrix.shape != (rows, rows):
@@ -72,63 +68,27 @@ def flip_board(matrix):
     for row in range(0, rows):
         for column in range(0, rows):
             tmp = matrix[row][column]
-            if tmp == 1:
-                matrix[row][column] = 2
-            elif tmp == 2:
-                matrix[row][column] = 1
+            if tmp == swap1:
+                matrix[row][column] = swap2
+            elif tmp == swap2:
+                matrix[row][column] = swap1
 
     return matrix
 
 
-# changes -1s and 1s in the matrix
-def flip_ml_board(matrix):
-
-    # test matrix shape
-    if matrix.shape != (rows, rows):
-        exit()
-
-    # flip
-    for row in range(0, rows):
-        for column in range(0, rows):
-            tmp = matrix[row][column]
-            if tmp == -1:
-                matrix[row][column] = 1
-            elif tmp == 1:
-                matrix[row][column] = -1
-
-    return matrix
-
-
-# changes -1s and 2s in the matrix
-def transform_to_from_ml(matrix):
-
-    # test matrix shape
-    if matrix.shape != (rows, rows):
-        exit()
-
-    # flip
-    for row in range(0, rows):
-        for column in range(0, rows):
-            tmp = matrix[row][column]
-            if tmp == -1:
-                matrix[row][column] = 2
-            elif tmp == 2:
-                matrix[row][column] = -1
-
-    return matrix
-
-
-# generates a random board state from the point of the 1s perspective
-# (next turn always belongs to 1)
-def random_board():
+# generates a random board state from the point of the player1's perspective
+# (next turn always belongs to player1)
+def random_board(player1=1, player2=2):
     # who starts?
     turn = random.randint(1, 2)
 
     # number of turns (0 to 8) if 1 (you) started and (1 to 7) if 2 (oppponent) started
     turns = 0
     if turn == 1:
+        turn = player1
         turns = random.randint(0, 8)
     else:
+        turn = player2
         turns = random.randint(1, 7)
 
     # try boards and find one without winner and random specs
@@ -144,11 +104,32 @@ def random_board():
                 if matrix[row][column] == 0:
                     matrix[row][column] = turn
                     break
-            if turn == 1:
-                turn = 2
+            if turn == player1:
+                turn = player2
             else:
-                turn = 1
+                turn = player1
 
         state = check_game_state(matrix)
 
     return matrix
+
+
+def store_matrix_to_file(matrix, filename):
+    file = open("storage/" + filename + ".txt", "w")
+    rows, columns = matrix.shape
+    file.writelines(str(rows) + "\n")
+    file.write(str(columns) + "\n")
+    for number in matrix.flatten():
+        file.write(str(number) + "\n")
+    file.close()
+
+
+def load_matrix_from_file(filename):
+    file = open("storage/" + filename + ".txt", "r")
+    lines = file.readlines()
+    numbers = [None] * len(lines)
+    for i, line in enumerate(lines):
+        numbers[i] = float(line)
+    result = np.reshape(numbers[2:], (int(numbers[0]), int(numbers[1])))
+    file.close()
+    return result

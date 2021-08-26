@@ -13,8 +13,8 @@ from logic.general import flip_board
 
 print("Compare Algorithms:")
 
-algorithm1 = random_next_move
-algorithm2 = perceptron_next_move
+algorithm1 = perceptron_next_move
+algorithm2 = random_next_move
 
 algorithm1wins = 0
 algorithm2wins = 0
