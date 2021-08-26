@@ -99,6 +99,17 @@ def tanh(x):
     return np.tanh(x)
 
 
-random_initial_matrices("test")
+def train_perceptron(filename, iterations):
+    random_initial_matrices(filename)
+    weights1 = load_matrix_from_file(filename + "1")
+    weights2 = load_matrix_from_file(filename + "2")
 
-# get_next_move(np.array([[0, 1, 2], [0, 1, 2], [0, 1, 2]]))
+    for i in range(0, iterations):
+        pass
+
+    store_matrix_to_file(weights1, filename + "1")
+    store_matrix_to_file(weights2, filename + "2")
+
+
+if __name__ == "__main__":
+    train_perceptron("test", 10)

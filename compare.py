@@ -20,7 +20,9 @@ algorithm1wins = 0
 algorithm2wins = 0
 draws = 0
 
-for i in range(1000):
+games = 1000
+
+for i in range(games):
     matrix = np.zeros((3, 3), dtype=np.int8)
     result = 0
     index = 0
@@ -45,6 +47,6 @@ for i in range(1000):
             draws += 1
         index += 1
 
-print("algorithm 1 won: %d" % algorithm1wins)
-print("algorithm 2 won: %d" % algorithm2wins)
-print("Draws: %d" % draws)
+print("algorithm 1 won: %d %%" % int(100.0 * algorithm1wins / games))
+print("algorithm 2 won: %d %%" % int(100.0 * algorithm2wins / games))
+print("Draws: %d %%" % int(100.0 * draws / games))
