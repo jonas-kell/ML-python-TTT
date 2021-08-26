@@ -77,3 +77,41 @@ def flip_board(matrix):
                 matrix[row][column] = 1
 
     return matrix
+
+
+# changes -1s and 1s in the matrix
+def flip_ml_board(matrix):
+
+    # test matrix shape
+    if matrix.shape != (rows, rows):
+        exit()
+
+    # flip
+    for row in range(0, rows):
+        for column in range(0, rows):
+            tmp = matrix[row][column]
+            if tmp == -1:
+                matrix[row][column] = 1
+            elif tmp == 1:
+                matrix[row][column] = -1
+
+    return matrix
+
+
+# changes -1s and 2s in the matrix
+def transform_to_from_ml(matrix):
+
+    # test matrix shape
+    if matrix.shape != (rows, rows):
+        exit()
+
+    # flip
+    for row in range(0, rows):
+        for column in range(0, rows):
+            tmp = matrix[row][column]
+            if tmp == -1:
+                matrix[row][column] = 2
+            elif tmp == 2:
+                matrix[row][column] = -1
+
+    return matrix
