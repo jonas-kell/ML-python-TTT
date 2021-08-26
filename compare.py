@@ -20,7 +20,7 @@ algorithm1wins = 0
 algorithm2wins = 0
 draws = 0
 
-games = 10000
+games = 1000
 
 for i in range(games):
     matrix = np.zeros((3, 3), dtype=np.int8)

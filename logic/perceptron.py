@@ -23,7 +23,7 @@ stored_weights2 = None
 # assumes there is space. may run into trouble if not the case
 def get_next_move(matrix):
     dim = 3
-    filename = "200000"
+    filename = "test"
 
     # test matrix shape
     if matrix.shape != (dim, dim):
@@ -117,9 +117,11 @@ def update_weights_step(matrix, weights1, weights2):
     )  # sigmoid activated
 
     # update weights
-    learn_rate = 0.3
+    learn_rate = 0.005
     weights1 = weights1 + learn_rate * np.matmul(delta_hidden_layer, input.T)
     weights2 = weights2 + learn_rate * np.matmul(delta_end, hidden_layer.T)
+
+    return (weights1, weights2)
 
 
 def sigmoid(x):
@@ -131,7 +133,7 @@ def tanh(x):
 
 
 def train_perceptron(filename, iterations):
-    # random_initial_matrices(filename)
+    random_initial_matrices(filename)
     weights1 = load_matrix_from_file(filename + "1")
     weights2 = load_matrix_from_file(filename + "2")
 
@@ -140,16 +142,17 @@ def train_perceptron(filename, iterations):
         # get setup
         matrix = random_board()
         # perform weight update for one step
-        update_weights_step(matrix, weights1, weights2)
+        (weights1, weights2) = update_weights_step(matrix, weights1, weights2)
 
         percent = int(100.0 * i / iterations)
         if percent % 5 == 0 and percent != printed_percent:
             print("Training %d %% done" % percent)
             printed_percent = percent
+            print(weights1[0, 0])
 
     store_matrix_to_file(weights1, filename + "1")
     store_matrix_to_file(weights2, filename + "2")
 
 
 if __name__ == "__main__":
-    train_perceptron("100000", 100000)
+    train_perceptron("test", 25000)
