@@ -32,7 +32,7 @@ def get_next_move(matrix):
     global stored_weights1
     global stored_weights2
 
-    if stored_weights1 == None or stored_weights2 == None:
+    if stored_weights1 is None or stored_weights2 is None:
         stored_weights1 = load_matrix_from_file(filename + "1")
         stored_weights2 = load_matrix_from_file(filename + "2")
 
@@ -50,7 +50,8 @@ def get_next_move(matrix):
                     best_prob = results[i, j]
                     best = (i, j)
 
-    matrix[i, j] = 1
+    matrix[best[0], best[1]] = 1
+    return matrix
 
 
 def store_matrix_to_file(matrix, filename):
@@ -98,6 +99,6 @@ def tanh(x):
     return np.tanh(x)
 
 
-# random_initial_matrices("test")
+random_initial_matrices("test")
 
 # get_next_move(np.array([[0, 1, 2], [0, 1, 2], [0, 1, 2]]))

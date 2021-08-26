@@ -6,19 +6,21 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from logic.random_strat import get_next_move as random_next_move
 from logic.minimax import get_next_move as minimax_next_move
 from logic.minimax_c import get_next_move as minimax_next_move_in_c
+from logic.perceptron import get_next_move as perceptron_next_move
+
 from logic.general import check_game_state
 from logic.general import flip_board
 
 print("Compare Algorithms:")
 
-algorithm1 = minimax_next_move_in_c
-algorithm2 = minimax_next_move_in_c
+algorithm1 = random_next_move
+algorithm2 = perceptron_next_move
 
 algorithm1wins = 0
 algorithm2wins = 0
 draws = 0
 
-for i in range(100):
+for i in range(1000):
     matrix = np.zeros((3, 3), dtype=np.int8)
     result = 0
     index = 0
