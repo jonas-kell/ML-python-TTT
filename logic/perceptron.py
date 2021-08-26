@@ -23,7 +23,7 @@ stored_weights2 = None
 # assumes there is space. may run into trouble if not the case
 def get_next_move(matrix):
     dim = 3
-    filename = "100000"
+    filename = "200000"
 
     # test matrix shape
     if matrix.shape != (dim, dim):
@@ -131,7 +131,7 @@ def tanh(x):
 
 
 def train_perceptron(filename, iterations):
-    random_initial_matrices(filename)
+    # random_initial_matrices(filename)
     weights1 = load_matrix_from_file(filename + "1")
     weights2 = load_matrix_from_file(filename + "2")
 
