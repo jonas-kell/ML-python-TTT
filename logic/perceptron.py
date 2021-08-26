@@ -101,10 +101,25 @@ def update_weights_step(matrix, weights1, weights2):
         exit()
 
     # compute best response
-    result = get_output(input, weights1, weights2)
-    # compute loss
+    hidden_layer = tanh(np.matmul(weights1, input))
+    result = sigmoid(np.matmul(weights2, hidden_layer))
+
+    # compute expected result
+    matrix_changed_minimax = np.copy(matrix)
+    minimax_next_move(matrix_changed_minimax)
+    # minimax will set one more 1 somewhere. Therefore the difference indicates the correct placement of the next digit
+    expected = (matrix_changed_minimax - matrix).reshape((9, 1))
+
     # compute deltas
+    delta_end = expected - result
+    delta_hidden_layer = (
+        hidden_layer * (1 - hidden_layer) * np.matmul(weights2.T, delta_end)
+    )  # sigmoid activated
+
     # update weights
+    learn_rate = 0.3
+    weights1 = weights1 + learn_rate * np.matmul(delta_hidden_layer, input.T)
+    weights2 = weights2 + learn_rate * np.matmul(delta_end, hidden_layer.T)
 
 
 def sigmoid(x):
@@ -131,4 +146,4 @@ def train_perceptron(filename, iterations):
 
 
 if __name__ == "__main__":
-    train_perceptron("test", 10)
+    train_perceptron("test", 10000)
