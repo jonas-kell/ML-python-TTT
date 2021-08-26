@@ -155,4 +155,4 @@ def train_perceptron(filename, iterations):
 
 
 if __name__ == "__main__":
-    train_perceptron("test", 25000)
+    train_perceptron("test", 50000)
