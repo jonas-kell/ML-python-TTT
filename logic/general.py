@@ -1,4 +1,5 @@
 import numpy as np
+import random
 
 rows = 3
 
@@ -113,5 +114,41 @@ def transform_to_from_ml(matrix):
                 matrix[row][column] = 2
             elif tmp == 2:
                 matrix[row][column] = -1
+
+    return matrix
+
+
+# generates a random board state from the point of the 1s perspective
+# (next turn always belongs to 1)
+def random_board():
+    # who starts?
+    turn = random.randint(1, 2)
+
+    # number of turns (0 to 8) if 1 (you) started and (1 to 7) if 2 (oppponent) started
+    turns = 0
+    if turn == 1:
+        turns = random.randint(0, 8)
+    else:
+        turns = random.randint(1, 7)
+
+    # try boards and find one without winner and random specs
+    state = -1
+    while state != 0:
+        matrix = np.zeros((rows, rows), dtype=np.int8)
+
+        for i in range(0, turns):
+            # set randomly (not efficient)
+            while True:
+                row = random.randrange(rows)
+                column = random.randrange(rows)
+                if matrix[row][column] == 0:
+                    matrix[row][column] = turn
+                    break
+            if turn == 1:
+                turn = 2
+            else:
+                turn = 1
+
+        state = check_game_state(matrix)
 
     return matrix

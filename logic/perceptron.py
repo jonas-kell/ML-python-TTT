@@ -3,6 +3,7 @@ import numpy as np
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from logic.general import check_game_state
+from logic.general import random_board
 from logic.minimax_c import get_next_move as minimax_next_move
 
 # control the properties of the neural net
@@ -16,7 +17,6 @@ stored_weights2 = None
 
 # assignmeint of variables:
 # matrix is a 3 x 3 numpy array
-
 # a 0 indicates no placed symbol
 # a 1 indicates a placed symbol of the type of the person whose next move is requested (make sure to transpose to this state accordingly)
 # a 2 indicates a placed symbol of the type of the opponent (make sure to transpose to this state accordingly)
@@ -75,6 +75,11 @@ def load_matrix_from_file(filename):
     return result
 
 
+def random_initial_matrices(filename):
+    store_matrix_to_file(np.random.rand(hidden, inputs) * 2 - 1, filename + "1")
+    store_matrix_to_file(np.random.rand(outputs, hidden) * 2 - 1, filename + "2")
+
+
 def get_output(input, weights1, weights2):
     if (
         input.shape != (inputs, 1)
@@ -86,9 +91,20 @@ def get_output(input, weights1, weights2):
     return sigmoid(np.matmul(weights2, tanh(np.matmul(weights1, input))))
 
 
-def random_initial_matrices(filename):
-    store_matrix_to_file(np.random.rand(hidden, inputs) * 2 - 1, filename + "1")
-    store_matrix_to_file(np.random.rand(outputs, hidden) * 2 - 1, filename + "2")
+def update_weights_step(matrix, weights1, weights2):
+    input = matrix.reshape((9, 1))
+    if (
+        input.shape != (inputs, 1)
+        or weights1.shape != (hidden, inputs)
+        or weights2.shape != (outputs, hidden)
+    ):
+        exit()
+
+    # compute best response
+    result = get_output(input, weights1, weights2)
+    # compute loss
+    # compute deltas
+    # update weights
 
 
 def sigmoid(x):
@@ -105,7 +121,10 @@ def train_perceptron(filename, iterations):
     weights2 = load_matrix_from_file(filename + "2")
 
     for i in range(0, iterations):
-        pass
+        # get setup
+        matrix = random_board()
+        # perform weight update for one step
+        update_weights_step(matrix, weights1, weights2)
 
     store_matrix_to_file(weights1, filename + "1")
     store_matrix_to_file(weights2, filename + "2")
