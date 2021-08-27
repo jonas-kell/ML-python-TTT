@@ -9,7 +9,7 @@ import logic.perceptron_ttt_interface as interface
 # control the properties of the neural net
 inputs = 9
 outputs = 9
-hidden = 12
+hidden = 5
 learn_rate = 0.01
 
 
@@ -44,10 +44,10 @@ def update_weights_step(weights1, weights2, input, expected_output):
     (hidden_layer, result) = get_output(input, weights1, weights2)
 
     # compute deltas
-    delta_end = expected_output - result
+    delta_end = result * (1 - result) * (expected_output - result)  # sigmoid activated
     delta_hidden_layer = (
-        hidden_layer * (1 - hidden_layer) * np.matmul(weights2.T, delta_end)
-    )  # sigmoid activated
+        (1 + hidden_layer) * (1 - hidden_layer) * np.matmul(weights2.T, delta_end)
+    )  # tanh activated
 
     # update weights
     weights1 = weights1 + learn_rate * np.matmul(delta_hidden_layer, input.T)
@@ -92,5 +92,33 @@ def train_perceptron(filename, iterations, input_output_pair):
     store_matrix_to_file(weights2, filename + "2")
 
 
+def learn_and():
+    import random
+
+    res = [
+        (np.array([[0], [0]]), np.array([[0]])),
+        (np.array([[0], [1]]), np.array([[0]])),
+        (np.array([[1], [0]]), np.array([[0]])),
+        (np.array([[1], [1]]), np.array([[1]])),
+    ]
+    return res[3]
+
+
 if __name__ == "__main__":
-    train_perceptron("test", 10000, interface.input_output_pair)
+    train_perceptron("test", 100000, interface.input_output_pair)
+
+    # print(load_matrix_from_file("test1"))
+    # print(load_matrix_from_file("test2"))
+
+    # train_perceptron("test", 10000, learn_and)
+
+    # print(load_matrix_from_file("test1"))
+    # print(load_matrix_from_file("test2"))
+
+    # print(
+    #     get_output(
+    #         learn_and()[0],
+    #         load_matrix_from_file("test1"),
+    #         load_matrix_from_file("test2"),
+    #     )[1]
+    # )
