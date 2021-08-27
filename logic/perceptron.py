@@ -102,45 +102,38 @@ def train_perceptron(filename, iterations, input_output_pair, init_random=True):
 
 def learn_logic():
     res = [
-        (np.array([[0], [0]]), np.array([[0]])),
-        (np.array([[1], [0]]), np.array([[1]])),
-        (np.array([[0], [1]]), np.array([[1]])),
-        (np.array([[1], [1]]), np.array([[0]])),
+        (np.array([[0], [0], [0]]), np.array([[0]])),
+        (np.array([[1], [0], [0]]), np.array([[1]])),
+        (np.array([[0], [1], [0]]), np.array([[1]])),
+        (np.array([[1], [1], [0]]), np.array([[0]])),
+        (np.array([[0], [0], [1]]), np.array([[0]])),
+        (np.array([[1], [0], [1]]), np.array([[1]])),
+        (np.array([[0], [1], [1]]), np.array([[1]])),
+        (np.array([[1], [1], [1]]), np.array([[0]])),
     ]
-    return res[random.randint(0, 3)]
+    return res[random.randint(0, 7)]
 
 
 def learn_logic_test():
     train_perceptron("logic", 200000, learn_logic, init_random=True)
 
-    print(
-        get_output(
-            np.array([[0], [0]]),
-            load_matrix_from_file("logic1"),
-            load_matrix_from_file("logic2"),
-        )[1]
-    )
-    print(
-        get_output(
-            np.array([[1], [0]]),
-            load_matrix_from_file("logic1"),
-            load_matrix_from_file("logic2"),
-        )[1]
-    )
-    print(
-        get_output(
-            np.array([[0], [1]]),
-            load_matrix_from_file("logic1"),
-            load_matrix_from_file("logic2"),
-        )[1]
-    )
-    print(
-        get_output(
-            np.array([[1], [1]]),
-            load_matrix_from_file("logic1"),
-            load_matrix_from_file("logic2"),
-        )[1]
-    )
+    for i in range(0, 8):
+        print(
+            get_output(
+                [
+                    np.array([[0], [0], [0]]),
+                    np.array([[1], [0], [0]]),
+                    np.array([[0], [1], [0]]),
+                    np.array([[1], [1], [0]]),
+                    np.array([[0], [0], [1]]),
+                    np.array([[1], [0], [1]]),
+                    np.array([[0], [1], [1]]),
+                    np.array([[1], [1], [1]]),
+                ][i],
+                load_matrix_from_file("logic1"),
+                load_matrix_from_file("logic2"),
+            )[1]
+        )
 
 
 if __name__ == "__main__":
