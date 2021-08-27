@@ -59,9 +59,6 @@ def ask_perceptron_and_format_solution(matrix):
     # clone matrix, because it randomly gets modified otherwise
     use_matrix = np.copy(matrix)
 
-    # perceptron_output works with the machine-learning 1-(-1)-encoding, matrix is in normal 1-2-encoding
-    flip_board(use_matrix, swap1=2, swap2=-1)
-
     _, results = perceptron.get_output(
         use_matrix.reshape((dim * dim, 1)),
         stored_weights1,
@@ -81,7 +78,7 @@ def get_minimax_expected_result(input):
     use_input = np.copy(input)
 
     # get non-ml version of board
-    state_before = flip_board(use_input.reshape(3, 3), swap1=-1, swap2=2)
+    state_before = use_input.reshape(3, 3)
 
     # get correct solution with minimax
     minimax_solution = np.copy(state_before)
@@ -96,7 +93,7 @@ def get_minimax_expected_result(input):
 # generate a random board state in ml-1-(-1)-encoding and the correct output-vector
 def input_output_pair():
     # get random inputs in ml-format
-    random_state = random_board(player1=1, player2=-1)
+    random_state = random_board(player1=1, player2=2)
     input = random_state.reshape((9, 1))
 
     # compute expected result
@@ -107,4 +104,4 @@ def input_output_pair():
 
 if __name__ == "__main__":
     pass
-    # print(input_output_pair())
+    print(input_output_pair())
