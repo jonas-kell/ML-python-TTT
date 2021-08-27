@@ -10,7 +10,7 @@ import logic.perceptron_ttt_interface as interface
 # control the properties of the neural net
 inputs = 9
 outputs = 9
-hidden = 8
+hidden = 20
 learn_rate = 0.01
 
 
@@ -151,5 +151,5 @@ def learn_logic_test():
 
 
 if __name__ == "__main__":
-    train_perceptron("test", 100000, interface.input_output_pair, init_random=True)
+    train_perceptron("test", 100000, interface.input_output_pair, init_random=False)
     # learn_logic_test()
