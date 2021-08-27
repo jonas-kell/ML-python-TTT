@@ -11,7 +11,7 @@ import logic.perceptron_ttt_interface as interface
 inputs = 9
 outputs = 9
 hidden = 30
-learn_rate = 0.3
+learn_rate = 0.1
 
 
 def random_initial_matrices(filename):
@@ -152,6 +152,6 @@ def learn_logic_test():
 
 if __name__ == "__main__":
     train_perceptron(
-        "tic-tac-toe", 100000, interface.input_output_pair, init_random=True
+        "tic-tac-toe", 10000, interface.input_output_pair, init_random=False
     )
     # learn_logic_test()
