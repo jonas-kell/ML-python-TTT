@@ -3,7 +3,6 @@ import numpy as np
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from logic.general import random_board
-from logic.general import flip_board
 from logic.general import load_matrix_from_file
 from logic.minimax_c import get_next_move as minimax_next_move
 import logic.perceptron as perceptron
