@@ -21,7 +21,7 @@ stored_weights2 = None
 # a 2 indicates a placed symbol of the type of the opponent (make sure to transpose to this state accordingly)
 # assumes there is space. may run into trouble if not the case
 def get_next_move(matrix):
-    filename = "test"
+    filename = "tic-tac-toe"
 
     # test matrix shape
     if matrix.shape != (dim, dim):

@@ -10,8 +10,8 @@ import logic.perceptron_ttt_interface as interface
 # control the properties of the neural net
 inputs = 9
 outputs = 9
-hidden = 20
-learn_rate = 0.01
+hidden = 30
+learn_rate = 0.3
 
 
 def random_initial_matrices(filename):
@@ -118,38 +118,40 @@ def learn_logic():
 
 
 def learn_logic_test():
-    train_perceptron("test", 200000, learn_logic, init_random=True)
+    train_perceptron("logic", 200000, learn_logic, init_random=True)
 
     print(
         get_output(
             np.array([[0], [0]]),
-            load_matrix_from_file("test1"),
-            load_matrix_from_file("test2"),
+            load_matrix_from_file("logic1"),
+            load_matrix_from_file("logic2"),
         )[1]
     )
     print(
         get_output(
             np.array([[1], [0]]),
-            load_matrix_from_file("test1"),
-            load_matrix_from_file("test2"),
+            load_matrix_from_file("logic1"),
+            load_matrix_from_file("logic2"),
         )[1]
     )
     print(
         get_output(
             np.array([[0], [1]]),
-            load_matrix_from_file("test1"),
-            load_matrix_from_file("test2"),
+            load_matrix_from_file("logic1"),
+            load_matrix_from_file("logic2"),
         )[1]
     )
     print(
         get_output(
             np.array([[1], [1]]),
-            load_matrix_from_file("test1"),
-            load_matrix_from_file("test2"),
+            load_matrix_from_file("logic1"),
+            load_matrix_from_file("logic2"),
         )[1]
     )
 
 
 if __name__ == "__main__":
-    train_perceptron("test", 100000, interface.input_output_pair, init_random=False)
+    train_perceptron(
+        "tic-tac-toe", 100000, interface.input_output_pair, init_random=True
+    )
     # learn_logic_test()
