@@ -46,13 +46,10 @@ def update_weights_step(weights1, weights2, input, expected_output):
 
     # compute deltas
     delta_end = result * (1 - result) * (expected_output - result)  # sigmoid activated
+
     delta_hidden_layer = (
         hidden_layer * (1 - hidden_layer) * np.matmul(weights2.T, delta_end)
     )  # sigmoid activated
-
-    # delta_hidden_layer = (
-    #     (1 + hidden_layer) * (1 - hidden_layer) * np.matmul(weights2.T, delta_end)
-    # )  # tanh activated
 
     # update weights
     weights1 = weights1 + learn_rate * np.matmul(delta_hidden_layer, input.T)
@@ -63,10 +60,6 @@ def update_weights_step(weights1, weights2, input, expected_output):
 
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
-
-
-def tanh(x):
-    return np.tanh(x)
 
 
 def train_perceptron(filename, iterations, input_output_pair, init_random=True):
