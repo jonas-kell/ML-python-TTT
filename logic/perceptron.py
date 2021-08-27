@@ -7,9 +7,9 @@ from logic.general import load_matrix_from_file
 import logic.perceptron_ttt_interface as interface
 
 # control the properties of the neural net
-inputs = 9
-outputs = 9
-hidden = 5
+inputs = 2
+outputs = 1
+hidden = 3
 learn_rate = 0.01
 
 
@@ -24,7 +24,7 @@ def get_output(input, weights1, weights2):
         or weights1.shape != (hidden, inputs)
         or weights2.shape != (outputs, hidden)
     ):
-        exit()
+        raise ValueError("wrong shapes")
 
     hidden_layer = tanh(np.matmul(weights1, input))
     result = sigmoid(np.matmul(weights2, hidden_layer))
@@ -38,7 +38,7 @@ def update_weights_step(weights1, weights2, input, expected_output):
         or weights1.shape != (hidden, inputs)
         or weights2.shape != (outputs, hidden)
     ):
-        exit()
+        raise ValueError("wrong shapes")
 
     # compute perceptron response
     (hidden_layer, result) = get_output(input, weights1, weights2)
@@ -96,29 +96,44 @@ def learn_and():
     import random
 
     res = [
-        (np.array([[0], [0]]), np.array([[0]])),
-        (np.array([[0], [1]]), np.array([[0]])),
-        (np.array([[1], [0]]), np.array([[0]])),
-        (np.array([[1], [1]]), np.array([[1]])),
+        (np.array([[0], [0]]), np.array([[1]])),
+        (np.array([[1], [0]]), np.array([[1]])),
+        (np.array([[0], [1]]), np.array([[1]])),
+        (np.array([[1], [1]]), np.array([[0]])),
     ]
-    return res[3]
+    return res[random.randint(0, 3)]
 
 
 if __name__ == "__main__":
-    train_perceptron("test", 100000, interface.input_output_pair)
+    # train_perceptron("test", 100000, interface.input_output_pair)
 
-    # print(load_matrix_from_file("test1"))
-    # print(load_matrix_from_file("test2"))
+    train_perceptron("test", 100000, learn_and)
 
-    # train_perceptron("test", 10000, learn_and)
-
-    # print(load_matrix_from_file("test1"))
-    # print(load_matrix_from_file("test2"))
-
-    # print(
-    #     get_output(
-    #         learn_and()[0],
-    #         load_matrix_from_file("test1"),
-    #         load_matrix_from_file("test2"),
-    #     )[1]
-    # )
+    print(
+        get_output(
+            np.array([[0], [0]]),
+            load_matrix_from_file("test1"),
+            load_matrix_from_file("test2"),
+        )[1]
+    )
+    print(
+        get_output(
+            np.array([[1], [0]]),
+            load_matrix_from_file("test1"),
+            load_matrix_from_file("test2"),
+        )[1]
+    )
+    print(
+        get_output(
+            np.array([[0], [1]]),
+            load_matrix_from_file("test1"),
+            load_matrix_from_file("test2"),
+        )[1]
+    )
+    print(
+        get_output(
+            np.array([[1], [1]]),
+            load_matrix_from_file("test1"),
+            load_matrix_from_file("test2"),
+        )[1]
+    )
