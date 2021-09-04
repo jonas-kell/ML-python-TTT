@@ -5,6 +5,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from logic.general import random_board
 from logic.general import load_matrix_from_file
 from logic.minimax_c import get_next_move as minimax_next_move
+from logic.cache_minimax import random_precalculated_input_output_pair
 import logic.perceptron as perceptron
 
 dim = 3
@@ -68,39 +69,11 @@ def ask_perceptron_and_format_solution(matrix):
     return results
 
 
-# find the correct output-vector to a board in ml-1-(-1)-encoding
-def get_minimax_expected_result(input):
-    if input.shape != (9, 1):
-        raise ValueError("Wrong shapes")
+# generate a random board state and the correct output-vector
+def random_input_output_pair():
+    input_square, out_square = random_precalculated_input_output_pair()
 
-    # clone input, because it randomly gets modified otherwise
-    use_input = np.copy(input)
-
-    # get non-ml version of board
-    state_before = use_input.reshape(3, 3)
-
-    # get correct solution with minimax
-    minimax_solution = np.copy(state_before)
-    minimax_next_move(minimax_solution)
-
-    # minimax will set one more 1 somewhere. Therefore the difference indicates the correct placement of the next digit
-    expected = (minimax_solution - state_before).reshape((9, 1))
-
-    return expected
-
-
-# generate a random board state in ml-1-(-1)-encoding and the correct output-vector
-def input_output_pair():
-    # get random inputs in ml-format
-    random_state = random_board(player1=1, player2=2)
-    input = random_state.reshape((9, 1))
-
-    # compute expected result
-    expected_output = get_minimax_expected_result(input)
-
-    return (input, expected_output)
-
-
-if __name__ == "__main__":
-    pass
-    print(input_output_pair())
+    return (
+        input_square.reshape(dim * dim, 1),
+        (out_square - input_square).reshape(dim * dim, 1),
+    )

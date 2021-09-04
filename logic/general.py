@@ -1,5 +1,6 @@
 import numpy as np
 import random
+import json
 
 rows = 3
 
@@ -134,4 +135,50 @@ def load_matrix_from_file(filename):
     file.close()
     return result
 
-def board_to_number(matrix):
+
+def store_as_json_to_file(obj, filename):
+    file = open("storage/" + filename + ".json", "w")
+    file.write(json.dumps(obj, separators=(",", ":")))
+    file.close()
+
+
+def load_as_json_from_file(filename):
+    file = open("storage/" + filename + ".json", "r")
+    line = file.readline()
+    result = json.loads(line)
+
+    file.close()
+    return result
+
+
+def board_to_number(matrix, player1=1, player2=2):
+    # test matrix shape
+    if matrix.shape != (rows, rows):
+        raise ValueError("Wrong shapes")
+
+    number = 0
+    mask = 1
+    for element in matrix.flatten():
+        if element == player1:
+            number = number | mask
+        mask = mask << 1
+        if element == player2:
+            number = number | mask
+        mask = mask << 1
+
+    return number
+
+
+def number_to_board(number, player1=1, player2=2):
+    matrix = np.zeros((rows * rows), dtype=np.int8)
+
+    mask = 1
+    for i in range(rows * rows):
+        if (number & mask) != 0:
+            matrix[i] = player1
+        mask = mask << 1
+        if (number & mask) != 0:
+            matrix[i] = player2
+        mask = mask << 1
+
+    return matrix.reshape((rows, rows))

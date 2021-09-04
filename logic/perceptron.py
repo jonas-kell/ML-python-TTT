@@ -138,6 +138,5 @@ def learn_logic_test():
 
 if __name__ == "__main__":
     train_perceptron(
-        "tic-tac-toe", 20000, interface.input_output_pair, init_random=False
+        "tic-tac-toe", 60000, interface.random_input_output_pair, init_random=False
     )
-    # learn_logic_test()
