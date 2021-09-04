@@ -41,7 +41,7 @@ class ResizingCanvas(tk.Canvas):
 
         # test matrix shape
         if self.matrix.shape != (self.rows, self.rows):
-            exit()
+            raise ValueError("Wrong shapes")
 
         cell_width = self.width / self.rows
         cell_height = self.height / self.rows

@@ -19,7 +19,7 @@ rows = 3
 def check_game_state(matrix, player1=1, player2=2):
     # test matrix shape
     if matrix.shape != (rows, rows):
-        exit()
+        raise ValueError("Wrong shapes")
 
     # check rows
     for row in range(0, rows):
@@ -62,7 +62,7 @@ def flip_board(matrix, swap1=1, swap2=2):
 
     # test matrix shape
     if matrix.shape != (rows, rows):
-        exit()
+        raise ValueError("Wrong shapes")
 
     # flip
     for row in range(0, rows):
@@ -133,3 +133,5 @@ def load_matrix_from_file(filename):
     result = np.reshape(numbers[2:], (int(numbers[0]), int(numbers[1])))
     file.close()
     return result
+
+def board_to_number(matrix):

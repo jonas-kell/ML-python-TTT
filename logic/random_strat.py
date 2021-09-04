@@ -15,7 +15,7 @@ random.seed(time.time())
 def get_next_move(matrix):
     # test matrix shape
     if matrix.shape != (rows, rows):
-        exit()
+        raise ValueError("Wrong shapes")
 
     while True:
         row = random.randrange(rows)

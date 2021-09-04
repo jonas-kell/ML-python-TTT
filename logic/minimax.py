@@ -15,7 +15,7 @@ rows = 3
 def get_next_move(matrix):
     # test matrix shape
     if matrix.shape != (rows, rows):
-        exit()
+        raise ValueError("Wrong shapes")
 
     # AI to make its turn
     bestScore = -999999

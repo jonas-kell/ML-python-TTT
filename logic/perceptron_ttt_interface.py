@@ -24,7 +24,7 @@ def get_next_move(matrix):
 
     # test matrix shape
     if matrix.shape != (dim, dim):
-        exit()
+        raise ValueError("Wrong shapes")
 
     # cache control
     global stored_weights1
@@ -71,7 +71,7 @@ def ask_perceptron_and_format_solution(matrix):
 # find the correct output-vector to a board in ml-1-(-1)-encoding
 def get_minimax_expected_result(input):
     if input.shape != (9, 1):
-        exit()
+        raise ValueError("Wrong shapes")
 
     # clone input, because it randomly gets modified otherwise
     use_input = np.copy(input)
