@@ -115,6 +115,16 @@ def learn_logic():
 
 
 def learn_logic_test():
+    global inputs
+    global outputs
+    global hidden
+    global learn_rate
+
+    inputs = 3
+    outputs = 1
+    hidden = 20
+    learn_rate = 0.01
+
     train_perceptron("logic", 200000, learn_logic, init_random=True)
 
     for i in range(0, 8):
@@ -137,6 +147,8 @@ def learn_logic_test():
 
 
 if __name__ == "__main__":
+    # learn_logic_test() # test the leraning process with a simple demo
+
     train_perceptron(
-        "tic-tac-toe", 60000, interface.random_input_output_pair, init_random=False
+        "tic-tac-toe", 40000, interface.random_input_output_pair, init_random=False
     )
