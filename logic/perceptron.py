@@ -7,6 +7,10 @@ from logic.general import store_matrix_to_file
 from logic.general import load_matrix_from_file
 import logic.perceptron_ttt_interface as interface
 
+# cache function for many-times-execution
+stored_weights1 = None
+stored_weights2 = None
+
 # control the properties of the neural net
 inputs = 9
 outputs = 9
@@ -17,6 +21,21 @@ learn_rate = 0.001
 def random_initial_matrices(filename):
     store_matrix_to_file(np.random.rand(hidden, inputs) * 2 - 1, filename + "1")
     store_matrix_to_file(np.random.rand(outputs, hidden) * 2 - 1, filename + "2")
+
+
+def get_output_simple(input):
+    filename = "tic-tac-toe"
+
+    # cache control
+    global stored_weights1
+    global stored_weights2
+    if stored_weights1 is None or stored_weights2 is None:
+        stored_weights1 = load_matrix_from_file(filename + "1")
+        stored_weights2 = load_matrix_from_file(filename + "2")
+
+    _, results = get_output(input, stored_weights1, stored_weights2)
+
+    return results
 
 
 def get_output(input, weights1, weights2):
