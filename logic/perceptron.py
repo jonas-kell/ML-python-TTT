@@ -23,9 +23,7 @@ def random_initial_matrices(filename):
     store_matrix_to_file(np.random.rand(outputs, hidden) * 2 - 1, filename + "2")
 
 
-def get_output_simple(input):
-    filename = "tic-tac-toe"
-
+def get_output_simple(input, filename="tic-tac-toe"):
     # cache control
     global stored_weights1
     global stored_weights2
@@ -148,7 +146,7 @@ def learn_logic_test():
 
     for i in range(0, 8):
         print(
-            get_output(
+            get_output_simple(
                 [
                     np.array([[0], [0], [0]]),
                     np.array([[1], [0], [0]]),
@@ -159,14 +157,13 @@ def learn_logic_test():
                     np.array([[0], [1], [1]]),
                     np.array([[1], [1], [1]]),
                 ][i],
-                load_matrix_from_file("logic1"),
-                load_matrix_from_file("logic2"),
-            )[1]
+                "logic",
+            )
         )
 
 
 if __name__ == "__main__":
-    # learn_logic_test() # test the leraning process with a simple demo
+    # learn_logic_test()  # test the leraning process with a simple demo
 
     train_perceptron(
         "tic-tac-toe", 40000, interface.random_input_output_pair, init_random=False
