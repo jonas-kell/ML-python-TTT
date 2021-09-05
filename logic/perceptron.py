@@ -16,7 +16,7 @@ stored_weights2 = None
 inputs = 9
 outputs = 9
 hidden = 30
-learn_rate = 0.001
+learn_rate = 0.0001
 
 
 def random_initial_matrices(filename):
@@ -176,5 +176,5 @@ if __name__ == "__main__":
     # learn_logic_test()  # test the leraning process with a simple demo
 
     train_perceptron(
-        "tic-tac-toe", 4000000, interface.random_input_output_pair, init_random=False
+        "tic-tac-toe", 80000, interface.random_input_output_pair, init_random=False
     )
